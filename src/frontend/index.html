@@ -1,14 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>My Web Application</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Shop Loyalty</title>
+    <link rel="stylesheet" href="styles.css">
+    <!--Got this from adobe fonts toy story rix-->
+    <script>
+        (function(d) {
+          var config = {
+            kitId: 'hrp1stq',
+            scriptTimeout: 3000,
+            async: true
+          },
+          h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+        })(document);
+      </script>
 </head>
 <body>
-<header>
-<h1>Welcome to My Web Application</h1>
-</header>
-<p>This is a simple test HTML file to get
-you started with your project.</p>
-<button id="testButton">Click Me</button>
+    <div class="app-container">
+        <header>
+            <div class="logo-container">
+                <img id="view-logo" src="logo.png" alt="Your Store Logo" class="logo">
+          </div>
+        </header>
+
+        <main>
+            <!--First view, sign in contains: email, pass, submit as inputs-->
+            <div id="signin-view" class="app-view">
+                <h1 id="sign-in" class="header-font">SIGN IN</h1>
+                
+                <form id="signin-form">
+                    <input type="email" placeholder="Email" class="app-input" required>
+                    <div class="password-container">
+                        <input type="password" placeholder="Password" class="app-input" required>
+                        <!--Added an image for the password toggle and inline styling-->
+                        <span class="password-toggle"><img src="eye1.png" alt="Toggle Password Visibility" style="width: 30px; height: 25px;"></span>
+                    </div>
+                    <button type="submit" class="app-button">Sign In</button>
+                </form>
+
+                <!--Forgot password text that links to next view-->
+                <p><a href="#" id="show-forgot-password">Forgot Password?</a></p>
+                <!--No account text that links to next view-->
+                <p>Don't have an account? <a href="#" id="show-signup">Create Account</a></p>
+            </div>
+
+            <!--Second view, forgot password-->
+            <div id="forgot-password-view" class="app-view hidden">
+                <h1 id="forgot-password" class="header-font">FORGOT PASSWORD</h1>
+                <p>Enter your email to reset password.</p>
+
+                <form id="forgot-password-form">
+                    <input type="email" placeholder="Email" class="app-input" required>
+                    <button type="submit" class="app-button">Reset Password</button>
+                </form>
+                <p><a href="#" id="back-to-signin">Back to Sign In</a></p>
+            </div>
+
+            <!--Third View, sign up view. Contains: first, last name, password, phone, birthday, input. Radio for toggle -->
+            <div id="signup-view" class="app-view hidden">
+                <h1 id="create-account" class="header-font">CREATE ACCOUNT</h1>
+                <p>Create an account so you can order your favorites even faster.</p>
+                <form id="signup-form">
+                    <input type="text" placeholder="First Name" class="app-input" required>
+                    <input type="text" placeholder="Last Name" class="app-input" required>
+                    <input type="email" placeholder="Email" class="app-input" required>
+
+                    <div class="password-container">
+                        <input type="password" placeholder="Password" class="app-input" required>
+                        <!--Password visibility toggle-->
+                        <span class="password-toggle"><img src="eye.png" alt="Toggle Password Visibility"></span>
+                    </div>
+
+                    <input type="tel" placeholder="Mobile Number" class="app-input" required>
+                    <p>Enter a valid mobile number that can accept SMS messages. This will be used to verify your identity, grant access to your account, and for order-related notifications.</p>
+                    
+                    <div class="radio-container">
+                        <p>Receive text offers and promotions?*</p>
+                        <label><input type="radio" name="promotions" value="yes"> Yes</label>
+                        <label><input type="radio" name="promotions" value="no" checked> No</label>
+                   </div>
+                    <!--Added a date input for birthday-->
+                    <input type="date" placeholder="Birthday (optional)" class="app-input">
+                    <p>By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p> 
+                    <button type="submit" class="app-button">Create Account</button>
+                </form>
+                <p>Already have an account? <a href="#" id="show-signin">Sign In</a></p>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

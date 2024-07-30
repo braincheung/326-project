@@ -1,0 +1,139 @@
+/*My color pallete, got it from pinterest*/
+:root {
+    --color1: #CA7379;
+    --color2: #EFB0B6;
+    --color3: #F5CAC9;
+    --color4: #F7DBDA;
+    --color5: #FAE7E7;
+    --color6: #FCF3F3;
+    --color7: #FEFAFA;
+    --text-color: #4A4A4A;
+}
+
+body{
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--color7);
+    color: var(--text-color);
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 100%;
+    padding: 20px;
+}
+
+.logo-container {
+    text-align: center;
+    height: 100px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: -50px;
+}
+
+.logo {
+    max-width: 1000px; 
+    max-height: 300px; 
+    width: auto;
+    height: auto;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.app-view {
+    width: 100%;
+    max-width: 300px;
+}
+
+.hidden {
+    display: none;
+}
+
+.header-font {
+    font-family: rixtoystory-pro, sans-serif;
+    font-size: 45px;
+    color: var(--color1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.app-input {
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 15px;
+    border: none; /*this will get rid of the border around the input making it look cooler*/
+    border-bottom: 1px solid var(--color4); /*this will keep one line to the bottom of the*/
+    background-color: transparent;
+    font-size: 16px;
+}
+
+.app-input:focus {
+    outline: none;
+    border-bottom-color: var(--color2);
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/*this is for the buttons yes and and no for notifications*/
+.radio-container {
+    margin-bottom: 15px;
+}
+
+.radio-container p {
+    margin-bottom: 5px;
+}
+
+.radio-container label {
+    margin-right: 20px;
+}
+
+.app-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color1);
+    color: var(--color7);
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: var(--color1);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
