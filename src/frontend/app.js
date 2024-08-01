@@ -10,25 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //change logo based on the view
         changeLogo(viewId);
-    }
-    //fun function that I found that can change the image of the logo based on the screen
-    function changeLogo(viewId) {
-        const logoElement = document.getElementById('view-logo');
-        switch(viewId) {
-            case 'signin-view':
-                logoElement.src = 'logo.png';
-                break;
-            case 'signup-view':
-                logoElement.src = 'logo2.png';
-                break;
-            case 'forgot-password-view':
-                logoElement.src = 'logo3.png';
-                break;
-            case 'home-view':
-                logoElement.src = 'logo.png';
-                break;
-            default:
-                logoElement.src = 'logo.png';
+
+        if (viewId === 'home-view' || viewId === 'rewards-view' || viewId === 'messages-view' || viewId === 'settings-view') {
+            updateActiveNavLink(viewId);
         }
     }
 
@@ -82,6 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
         navigate('signin-view');
     });
 
+
+    //QR code button functionality this will show and remove the qr code
+    const qrCodeButton = document.getElementById('qr-code-button');
+    if (qrCodeButton) {
+        qrCodeButton.addEventListener('click', () => {
+            document.getElementById('qr-code-popup').classList.remove('hidden');
+        });
+    }
+
+    const closeQrPopup = document.getElementById('close-qr-popup');
+    if (closeQrPopup) {
+        closeQrPopup.addEventListener('click', () => {
+            document.getElementById('qr-code-popup').classList.add('hidden');
+        });
+    }
 });
 
 function setupPasswordToggles() {
@@ -91,7 +90,34 @@ function setupPasswordToggles() {
             const passwordInput = this.previousElementSibling;
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? 'eye1.png' : 'eye2.png';
+            this.querySelector('img').src = type === 'password' ? 'eye1.png' : 'eye2.png';
         });
     });
 }
+function updateActiveNavLink(viewId) {
+    document.querySelectorAll('#home-view nav a').forEach(link => {
+        link.classList.remove('active');
+    });
+    document.getElementById(viewId.replace('-view', '')).classList.add('active');
+}
+
+//fun function that I found that can change the image of the logo based on the screen
+function changeLogo(viewId) {
+    const logoElement = document.getElementById('view-logo');
+    switch(viewId) {
+        case 'signin-view':
+            logoElement.src = 'logo.png';
+            break;
+        case 'signup-view':
+            logoElement.src = 'logo2.png';
+            break;
+        case 'forgot-password-view':
+            logoElement.src = 'logo3.png';
+            break;
+        case 'home-view':
+            logoElement.src = 'logo.png';
+            break;
+        default:
+                logoElement.src = 'logo.png';
+        }
+    }

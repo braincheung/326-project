@@ -29,9 +29,9 @@
             <!--First view, sign in contains: email, pass, submit as inputs-->
             <div id="signin-view" class="app-view">
                 <h1 id="sign-in" class="header-font">SIGN IN</h1>
-                
+
                 <form id="signin-form">
-                    <input type="email" placeholder="Email" class="app-input" required>
+                    <input type="text" class="app-input" placeholder="Username or Email" required>
                     <div class="password-container">
                         <input type="password" placeholder="Password" class="app-input" required>
                         <!--Added an image for the password toggle and inline styling-->
@@ -70,7 +70,7 @@
                     <div class="password-container">
                         <input type="password" placeholder="Password" class="app-input" required>
                         <!--Password visibility toggle-->
-                        <span class="password-toggle"><img src="eye.png" alt="Toggle Password Visibility"></span>
+                        <span class="password-toggle"><img src="eye1.png" alt="Toggle Password Visibility" style="width: 30px; height: 25px;"></span>
                     </div>
 
                     <input type="tel" placeholder="Mobile Number" class="app-input" required>
@@ -88,7 +88,86 @@
                 </form>
                 <p>Already have an account? <a href="#" id="show-signin">Sign In</a></p>
             </div>
+            <!--Fourth view, home view. Contains: nav, stamp card, rewards, extra points, qr code button-->
+            <div id="home-view" class="app-view hidden">
+        
+                <nav>
+                    <a href="#" id="home">HOME</a>
+                    <a href="#" id="rewards">REWARDS</a>
+                    <a href="#" id="messages">MESSAGES</a>
+                    <a href="#" id="settings">SETTINGS</a>
+                </nav>
+                <!--Stamp card section, will most likely add functionality so it changes from a image to another image-->
+                <div class="stamp-card">
+                    <h1>YOUR STAMPS</h11>
+                    <div class="stamps">
+                        <div class="stamp">1</div>
+                        <div class="stamp">2</div>
+                        <div class="stamp">3</div>
+                        <div class="stamp">4</div>
+                        <div class="stamp">5</div>
+                        <div class="stamp">6</div>
+                        <div class="stamp">7</div>
+                        <div class="stamp">8</div>
+                        <div class="stamp">9</div>
+                        <div class="stamp">10</div>
+                    </div>
+                    <p>Get 1 stamp with every purchase</p>
+                </div>
+                <!--In progeress-->
+                <div class="rewards-section">
+                    <h2>Rewards</h2>
+                    <div class="reward-item">
+                        <img src="giftbox.png" alt="gift">
+                        <div>
+                            <h3>Free coffee</h3>
+                            <p>Claim it for 100 points</p>
+                        </div>
+                    </div>
+                </div>
+                <!--I want this to also be a nother page where you can click but this is it for now-->
+                <div class="extra-points-section">
+                    <h2>Get extra points</h2>
+                    <div class="extra-point-item">
+                        <div>
+                            <h3>We love feedback!</h3>
+                            <p>Leave a review and get extra points</p>
+                        </div>
+                        <span class="points">+2 stamps</span>
+                    </div>
+                    <div class="extra-point-item">
+                        <div>
+                            <h3>Enjoy with friends!</h3>
+                            <p>We give a gift to your friends for their first visit and extra stamps for you</p>
+                        </div>
+                        <span class="points">+2 stamps</span>
+                    </div>
+                </div>
+
+                <button id="qr-code-button" class="app-button">Show QR Code</button>
+            </div>
+
+            <div id="rewards-view" class="app-view hidden">
+                <!-- coming soon -->
+            </div>
+
+            <div id="messages-view" class="app-view hidden">
+                <!-- coming soon -->
+            </div>
+
+            <div id="settings-view" class="app-view hidden">
+                <!-- coming soon-->
+            </div>
         </main>
+
+        <div id="qr-code-popup" class="popup hidden">
+            <div class="popup-content">
+                <img src="qr.PNG" alt="QR Code">
+                <button id="close-qr-popup">Close</button>
+            </div>
+        </div>
     </div>
+
+    <script src="app.js"></script>
 </body>
 </html>

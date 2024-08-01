@@ -137,3 +137,95 @@ main {
 .forgot-password a:hover {
     text-decoration: underline;
 }
+#home-view header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#home-view .header-logo {
+    width: 100px;
+    height: auto;
+}
+
+#home-view nav {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    background-color: var(--color7);
+    padding: 10px 0;
+}
+#home-view nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 5px 20px;
+    margin: 0 10px;
+}
+
+#home-view nav a.active {
+    border-bottom: var(--color1) 2px solid;
+}
+
+.stamp-card {
+    background-color: var(--color7);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.stamp-card h1{
+    font-family: rixtoystory-pro, sans-serif;
+    font-size: 45px;
+}
+.stamp-card h2 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+.stamp-card p {
+    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+
+}
+.stamps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.stamp {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.rewards-section, .extra-points-section {
+    margin-bottom: 20px;
+}
+
+.reward-item, .extra-point-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.reward-item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.reward-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+.points {
+    color: #32CD32; /*this is a green color*/
+    font-weight: bold;
+}
