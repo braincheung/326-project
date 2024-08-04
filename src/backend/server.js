@@ -86,6 +86,67 @@ async function signin(response, email, password){
   }
 }
 
+//async reset password function, it takes response, email as parameters
+//it checks if the email exists in the database
+//if the email exists, it sends a password reset instructions message
+//if the email does not exist, it returns an error message
+//if an error occurs, it returns an error message
+async function resetPassword(response, email) {
+  try {
+    const result = await findUserByEmail(email);
+    if (result.docs.length > 0) {
+      response.writeHead(200, headerFields);
+      response.write(JSON.stringify({ message: 'Password reset instructions sent' }));
+    } else {
+      response.writeHead(404, headerFields);
+      response.write(JSON.stringify({ message: 'Email not found' }));
+    }
+    response.end();
+  } catch (err) {
+    response.writeHead(500, headerFields);
+    response.write(JSON.stringify({ message: 'Error resetting password', error: err.message }));
+    response.end();
+  }
+}
+
+//async update user function, it takes response, username, data as parameters
+//it loads the user from the database
+//it updates the user data with the new data
+//it saves the updated user data to the database
+//it returns a success message if the user data is updated successfully
+//if an error occurs, it returns an error message
+async function updateUser(response, username, data) {
+  try {
+    const user = await loadUser(username);
+    Object.assign(user, data);
+    await updateUserData(user);
+    response.writeHead(200, headerFields);
+    response.write(JSON.stringify({ message: 'User data updated successfully' }));
+    response.end();
+  } catch (err) {
+    response.writeHead(500, headerFields);
+    response.write(JSON.stringify({ message: 'Error updating user data', error: err.message }));
+    response.end();
+  }
+}
+
+//async delete user function, it takes response, username as parameters
+//it deletes the user from the database
+//it returns a success message if the user is deleted successfully
+//if an error occurs, it returns an error message
+async function deleteUserAccount(response, username) {
+  try {
+    await deleteUser(username);
+    response.writeHead(200, headerFields);
+    response.write(JSON.stringify({ message: `User ${username} deleted successfully` }));
+    response.end();
+  } catch (err) {
+    response.writeHead(500, headerFields);
+    response.write(JSON.stringify({ message: 'Error deleting user', error: err.message }));
+    response.end();
+  }
+}
+
 //still working on this function should create a qr code for the user and save it to the database
 async function getQRCode(response, username){
   try{

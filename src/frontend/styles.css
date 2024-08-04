@@ -204,6 +204,7 @@ main {
     color: var(--text-color);
 }
 
+/*this is for the rewards section in the home page*/
 .rewards-section, .extra-points-section {
     margin-bottom: 20px;
 }
@@ -228,3 +229,51 @@ main {
     color: #32CD32; /*this is a green color*/
     font-weight: bold;
 }
+/*end of rewards section in the home page*/
+/*this is for the rewards section page*/
+.rewards-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--color6);
+    border-bottom: 1px solid var(--color4);
+    margin-top: 40px;
+}
+
+.rewards-header h2 {
+    margin: 0;
+    color: var(--color1);
+}
+
+#stamps-count {
+    font-size: 18px;
+    color: var(--color1);
+}
+
+.rewards-list {
+    padding: 10px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--color7);
+    border: 1px solid var(--color4);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.reward-item.grayscale {
+    filter: grayscale(100%);
+    cursor: not-allowed;
+}
+
+.reward-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+/*end of rewards section page*/

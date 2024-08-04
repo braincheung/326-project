@@ -40,6 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
         navigate('signin-view');
     });
 
+    //rewards view navigation
+    document.getElementById('rewards').addEventListener('click', () => {
+        updateRewardsView();
+        navigate('rewards-view');
+    });
+
+
     //home navigation
     document.getElementById('home').addEventListener('click', () => navigate('home-view'));
     document.getElementById('rewards').addEventListener('click', () => navigate('rewards-view'));
@@ -182,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(result.message);
         }
     });
-}
+    }
     //QR code button functionality this will show and remove the qr code
     function displayQRCode() {
         const qrCodeData = localStorage.getItem('userQRCode');
@@ -219,6 +226,45 @@ function updateActiveNavLink(viewId) {
     });
     document.getElementById(viewId.replace('-view', '')).classList.add('active');
 }
+
+//update rewards view function
+function updateRewardsView() {
+    const stampsCount = 5; //test stamp count for now
+    document.getElementById('stamps-count').innerText = `Stamps: ${stampsCount}`;
+
+    document.querySelectorAll('.reward-item').forEach(item => {
+        const requiredStamps = parseInt(item.getAttribute('data-required-stamps'), 10);
+        if (stampsCount >= requiredStamps) {
+            item.classList.remove('grayscale');
+        } else {
+            item.classList.add('grayscale');
+        }
+    });
+}
+    // Event listener for reward item clicks
+    document.querySelectorAll('.reward-item').forEach(item => {
+        item.addEventListener('click', () => {
+            if (!item.classList.contains('grayscale')) {
+                const rewardId = item.getAttribute('data-reward-id');
+                showQRCode(rewardId);
+            } else {
+                alert('Not enough stamps to redeem this reward');
+            }
+        });
+    });
+    // Show QR code popup for specifically rewards
+    function showQRCode(rewardId) {
+        //generate or retrieve QR code based on rewardId
+        const qrCodeData = `QR code for reward ${rewardId}`; //just test
+        const qrCodeImg = document.getElementById('qr-code-image');
+        qrCodeImg.src = qrCodeData; //test
+        document.getElementById('qr-code-popup').classList.remove('hidden');
+    }
+
+    // Close QR code popup
+    document.getElementById('close-qr-popup').addEventListener('click', () => {
+        document.getElementById('qr-code-popup').classList.add('hidden');
+    });
 
 //fun function that I found that can change the image of the logo based on the screen
 function changeLogo(viewId) {

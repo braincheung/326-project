@@ -121,11 +121,11 @@
                 <!--In progeress-->
                 <div class="rewards-section">
                     <h2>Rewards</h2>
-                    <div class="reward-item">
-                        <img src="giftbox.png" alt="gift">
+                    <div class="reward-item" data-reward-id="1" data-required-stamps="5">
+                        <img src="giftbox.png" alt="Reward 1">
                         <div>
-                            <h3>Free coffee</h3>
-                            <p>Claim it for 100 points</p>
+                            <h3>Free Coffee</h3>
+                            <p>Claim it for 5 stamps</p>
                         </div>
                     </div>
                 </div>
@@ -152,7 +152,26 @@
             </div>
 
             <div id="rewards-view" class="app-view hidden">
-                <!-- coming soon -->
+                <div class="rewards-header">
+                    <h2>Rewards</h2>
+                    <div id="stamps-count">Stamps: 0</div>
+                </div>
+                <div class="rewards-list">
+                    <div class="reward-item" data-reward-id="1" data-required-stamps="5">
+                        <img src="giftbox.png" alt="Reward 1">
+                        <div>
+                            <h3>Free Coffee</h3>
+                            <p>Claim it for 5 stamps</p>
+                        </div>
+                    </div>
+                    <div class="reward-item grayscale" data-reward-id="2" data-required-stamps="10">
+                        <img src="giftbox.png" alt="Reward 2">
+                        <div>
+                            <h3>Free Pastry</h3>
+                            <p>Claim it for 10 stamps</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="messages-view" class="app-view hidden">
