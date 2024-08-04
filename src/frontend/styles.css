@@ -145,21 +145,20 @@ main {
 #home-view .header-logo {
     width: 100px;
     height: auto;
+    justify-content: center;
 }
 
 #home-view nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin-top: 50px;
     background-color: var(--color7);
-    padding: 10px 0;
 }
 #home-view nav a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: bold;
-    padding: 5px 20px;
-    margin: 0 10px;
+    margin: 0 4px;
 }
 
 #home-view nav a.active {
