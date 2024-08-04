@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //home navigation
     document.getElementById('home').addEventListener('click', () => navigate('home-view'));
     document.getElementById('rewards').addEventListener('click', () => navigate('rewards-view'));
-    document.getElementById('messages').addEventListener('click', () => navigate('messages-view'));
     document.getElementById('settings').addEventListener('click', () => navigate('settings-view'));
+    document.getElementById('rewards').addEventListener('click', () => {updateRewardsView(); navigate('rewards-view');});
 
     //initialize with the signin view
     navigate('signin-view');
@@ -268,21 +268,24 @@ function updateRewardsView() {
 
 //fun function that I found that can change the image of the logo based on the screen
 function changeLogo(viewId) {
+    const logoContainer = document.querySelector('.logo-container');
     const logoElement = document.getElementById('view-logo');
-    switch(viewId) {
-        case 'signin-view':
-            logoElement.src = 'logo.png';
-            break;
-        case 'signup-view':
-            logoElement.src = 'logo2.png';
-            break;
-        case 'forgot-password-view':
-            logoElement.src = 'logo3.png';
-            break;
-        case 'home-view':
-            logoElement.src = 'logo.png';
-            break;
-        default:
-            logoElement.src = 'logo.png';
+    if (viewId === 'home-view') {
+        logoContainer.style.marginBottom = '30px'; //changed this cause of weird issues with home view
+    } else {
+        logoContainer.style.marginBottom = '0px'; //set margin-bottom for other views
+        switch(viewId) {
+            case 'signin-view':
+                logoElement.src = 'logo.png';
+                break;
+            case 'signup-view':
+                logoElement.src = 'logo2.png';
+                break;
+            case 'forgot-password-view':
+                logoElement.src = 'logo3.png';
+                break;
+            default:
+                logoElement.src = 'logo.png';
+        }
     }
 }

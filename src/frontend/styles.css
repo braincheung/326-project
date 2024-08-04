@@ -27,12 +27,13 @@ body{
 
 .logo-container {
     text-align: center;
-    height: 100px; 
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
-    margin-bottom: -50px;
+    margin-top: 50px; 
+    margin-bottom: 0px;
+    z-index: 20; /* edit this to bring lopgo to front*/
 }
 
 .logo {
@@ -137,43 +138,68 @@ main {
 .forgot-password a:hover {
     text-decoration: underline;
 }
-#home-view header {
-    text-align: center;
-    margin-bottom: 10px;
+/* Home view styling */
+#home-view {
+    background-color: var(--color6);
+    padding: 0;
+    position: relative;
 }
 
-#home-view .header-logo {
-    width: 100px;
-    height: auto;
-    justify-content: center;
+#home-view::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: var(--color3);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 0;
 }
 
+#home-view > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Adjust the nav styles */
 #home-view nav {
     display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    background-color: var(--color7);
+    justify-content: space-around;
+    margin-top: 10px;
+    background-color: transparent;
+    padding: 10px;
+    margin-bottom: 30px;
 }
+
 #home-view nav a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: bold;
-    margin: 0 4px;
+    padding: 5px;
 }
 
 #home-view nav a.active {
-    border-bottom: var(--color1) 2px solid;
+    background-color: var(--color7);
+    border-radius: 15px;
 }
 
+/* Adjust the stamp card styles */
 .stamp-card {
     background-color: var(--color7);
-    padding: 20px;
+    padding: 5px;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .stamp-card h1{
     font-family: rixtoystory-pro, sans-serif;
-    font-size: 45px;
+    font-size: 40px;
+    text-align: center;
 }
 .stamp-card h2 {
     color: var(--text-color);
@@ -183,7 +209,6 @@ main {
     margin-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-
 }
 .stamps {
     display: grid;
