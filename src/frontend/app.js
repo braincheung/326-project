@@ -3,20 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const URL = "http://localhost:3260"; // Back-end server URL
 
     function navigate(viewId) {
-        //hide all views
         document.querySelectorAll(".app-view").forEach((view) => {
             view.classList.add('hidden');
         });
-
-        //show the requested view
+    
         document.getElementById(viewId).classList.remove('hidden');
-
-        //change logo based on the view
+    
+        const nav = document.querySelectorAll('nav');
+        nav.forEach(n => {
+            if (viewId === 'home-view' || viewId === 'rewards-view' || viewId === 'settings-view') {
+                n.classList.remove('hidden');
+                updateActiveNavLink(viewId);
+            } else {
+                n.classList.add('hidden');
+            }
+        });
         changeLogo(viewId);
-
-        if (viewId === 'home-view' || viewId === 'rewards-view' || viewId === 'messages-view' || viewId === 'settings-view') {
-            updateActiveNavLink(viewId);
-        }
     }
 
     //navigation event listeners
@@ -47,11 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    //home navigation
+    // Home navigation
     document.getElementById('home').addEventListener('click', () => navigate('home-view'));
     document.getElementById('rewards').addEventListener('click', () => navigate('rewards-view'));
     document.getElementById('settings').addEventListener('click', () => navigate('settings-view'));
-    document.getElementById('rewards').addEventListener('click', () => {updateRewardsView(); navigate('rewards-view');});
 
     //initialize with the signin view
     navigate('signin-view');
@@ -221,7 +222,7 @@ function setupPasswordToggles() {
     });
 }
 function updateActiveNavLink(viewId) {
-    document.querySelectorAll('#home-view nav a').forEach(link => {
+    document.querySelectorAll('nav a').forEach(link => {
         link.classList.remove('active');
     });
     document.getElementById(viewId.replace('-view', '')).classList.add('active');

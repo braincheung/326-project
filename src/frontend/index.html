@@ -8,28 +8,27 @@
     <!--Got this from adobe fonts toy story rix-->
     <script>
         (function(d) {
-          var config = {
-            kitId: 'hrp1stq',
-            scriptTimeout: 3000,
-            async: true
-          },
-          h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+            var config = {
+                kitId: 'hrp1stq',
+                scriptTimeout: 3000,
+                async: true
+            },
+            h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
         })(document);
-      </script>
+    </script>
 </head>
 <body>
     <div class="app-container">
         <header>
             <div class="logo-container">
                 <img id="view-logo" src="logo.png" alt="Your Store Logo" class="logo">
-          </div>
+            </div>
         </header>
 
         <main>
             <!--First view, sign in contains: email, pass, submit as inputs-->
             <div id="signin-view" class="app-view">
                 <h1 id="sign-in" class="header-font">SIGN IN</h1>
-
                 <form id="signin-form">
                     <input type="text" name="email" class="app-input" placeholder="Username or Email" required>
                     <div class="password-container">
@@ -39,7 +38,6 @@
                     </div>
                     <button type="submit" class="app-button">Sign In</button>
                 </form>
-
                 <!--Forgot password text that links to next view-->
                 <p><a href="#" id="show-forgot-password">Forgot Password?</a></p>
                 <!--No account text that links to next view-->
@@ -50,7 +48,6 @@
             <div id="forgot-password-view" class="app-view hidden">
                 <h1 id="forgot-password" class="header-font">FORGOT PASSWORD</h1>
                 <p>Enter your email to reset password.</p>
-
                 <form id="forgot-password-form">
                     <input type="email" placeholder="Email" class="app-input" required>
                     <button type="submit" class="app-button">Reset Password</button>
@@ -67,7 +64,6 @@
                     <input type="text" id="signup-lastname" name="lastname" placeholder="Last Name" class="app-input" required>
                     <input type="email" id="signup-email" name="email" placeholder="Email" class="app-input" required>
                     <input type="tel" id="signup-phone" name="phone" placeholder="Phone Number" class="app-input" required>
-
             
                     <div class="password-container">
                         <input type="password" id="signup-password" name="password" placeholder="Password" class="app-input" required>
@@ -116,7 +112,7 @@
                     </div>
                     <p>Get 1 stamp with every purchase</p>
                 </div>
-                <!--In progeress-->
+                <!--In progress-->
                 <div class="rewards-section">
                     <h2>Rewards</h2>
                     <div class="reward-item" data-reward-id="1" data-required-stamps="5">
@@ -127,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-                <!--I want this to also be a nother page where you can click but this is it for now-->
+                <!--I want this to also be another page where you can click but this is it for now-->
                 <div class="extra-points-section">
                     <h2>Get extra points</h2>
                     <div class="extra-point-item">
@@ -150,6 +146,11 @@
             </div>
 
             <div id="rewards-view" class="app-view hidden">
+                <nav>
+                    <a href="#" id="home">HOME</a>
+                    <a href="#" id="rewards">REWARDS</a>
+                    <a href="#" id="settings">SETTINGS</a>
+                </nav>
                 <div class="rewards-header">
                     <h2>Rewards</h2>
                     <div id="stamps-count">Stamps: 0</div>
@@ -171,7 +172,13 @@
                     </div>
                 </div>
             </div>
+
             <div id="settings-view" class="app-view hidden">
+                <nav>
+                    <a href="#" id="home">HOME</a>
+                    <a href="#" id="rewards">REWARDS</a>
+                    <a href="#" id="settings">SETTINGS</a>
+                </nav>
                 <!-- coming soon-->
             </div>
         </main>
