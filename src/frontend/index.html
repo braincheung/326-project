@@ -172,14 +172,37 @@
                     </div>
                 </div>
             </div>
-
+            <!--settings view, contains: nav, form, delete account button-->
             <div id="settings-view" class="app-view hidden">
                 <nav>
                     <a href="#" id="home">HOME</a>
                     <a href="#" id="rewards">REWARDS</a>
-                    <a href="#" id="settings">SETTINGS</a>
+                    <a href="#" id="settings" class="active">SETTINGS</a>
                 </nav>
-                <!-- coming soon-->
+                
+                <h1 id="settings-header" class="header-font">Account Settings</h1>
+                
+                <form id="settings-form">
+                    <input type="text" name="firstname" placeholder="First Name" class="app-input" required>
+                    <input type="text" name="lastname" placeholder="Last Name" class="app-input" required>
+                    <input type="email" name="email" placeholder="Email" class="app-input" required>
+                    <input type="tel" name="phone" placeholder="Phone" class="app-input" required>
+                    <input type="date" name="birthday" class="app-input" required>
+                    <input type="password" name="password" placeholder="New Password">
+                    <input type="password" name="confirmPassword" placeholder="Confirm New Password">
+                    
+                    <div class="radio-container">
+                        <p>Receive text offers and promotions?*</p>
+                        <input type="radio" id="settings-promo-yes" name="promo" value="yes">
+                        <label for="settings-promo-yes">Yes</label>
+                        <input type="radio" id="settings-promo-no" name="promo" value="no">
+                        <label for="settings-promo-no">No</label>
+                    </div>
+                    
+                    <button type="submit" class="app-button">Update Account</button>
+                </form>
+                
+                <button id="delete-account-button" class="app-button">Delete Account</button>
             </div>
         </main>
 

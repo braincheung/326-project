@@ -1,9 +1,163 @@
-# My Web Application
-## Project Setup
-To get started with the project, follow
-these steps:
-1. **Clone the Repository:**
-```sh
-git clone <repository-url>
-cd my-web-application
-```
+# Loyalty App Web Application
+
+## Project Overview
+This is my COMP 326 semester long project that implements front end and back end to create a working website. This website that I have
+created is a loyalty program for a store opening in September. Customers will be able to create an account, sign in, scan qr codes to gain a stamp, view their rewards, and so much more. 
+
+Users will also be able to change their account settings and also delete their account if they want. 
+
+## Installation and Setup
+
+### Prerequisites
+- Node.js
+- npm
+
+### Steps to Run the Application
+1. Clone the repository
+2. Run npm install
+3. Run npm start to start the server
+4. go to `http://localhost:3260`
+
+
+## API Documentation
+
+### User Authentication
+
+#### Sign Up
+Endpoint: /signup
+Method: POST
+Body:
+
+
+{
+ "firstname": "Brian",
+ "lastname": "Cheung",
+ "email": "brian@gmail.com",
+ "password": "123",
+ "phone": "1234567890",
+ "promo": true,
+ "birthday": "2002-23-11"
+}
+
+Response:
+Success 201 Created
+{
+  "message": "User Brian Cheung created successfully",
+  "qrCode": "image/qrcode"
+}
+
+Error 400 Bad Request
+{
+  "message": "All fields are required"
+}
+#### sign in
+Endpoint: '/signin'
+Method: POST
+Body:
+{
+  "email": "brian@gmail.com",
+  "password": "123"
+}
+
+Response:
+
+Success 200 OK
+{
+  "message": "Sign-in successful",
+  "user": {
+    "firstname": "Brian",
+    "lastname": "Cheung",
+    "email": "brian@gmail.com",
+    "phone": "1234567890",
+    "promo": true,
+    "birthday": "2002"-23-11",
+    "stamps": 0,
+    "rewards": []
+  }
+}
+
+Error 401 Unauthorized
+{
+  "message": "Invalid credentials"
+}
+
+### User Management
+#### Update User
+Endpoint: /update-user
+Method: PUT
+Body:
+{
+  "firstname": "Brian",
+  "lastname": "Cheung",
+  "email": "brian@gmail.com",
+  "phone": "1234567890",
+  "birthday": "2002-11-23",
+  "promo": true,
+  "password": "new123"
+}
+
+Response:
+
+Success 200 OK
+{
+  "message": "User updated successfully"
+}
+
+Error 404 Not Found
+{
+  "message": "User not found"
+}
+
+
+
+
+#### Delete User
+Endpoint: /delete-user
+Method: DELETE
+Body:
+{
+  "email": "brian@gmail.com"
+}
+
+Response:
+
+Success 200 OK
+{
+  "message": "User deleted successfully"
+}
+
+Error 404 Not Found
+{
+  "message": "User not found"
+}
+
+
+### Get User QR Code
+
+Endpoint: /qr-code
+Method: GET
+Query Params: username
+Response:
+
+Success 200 OK
+{
+  "qrCode": "data:image/qrcode.png"
+} 
+
+Error 404 Not Found
+{
+  "message": "QR code not found for user"
+}
+
+
+### Technology Stack
+
+Front-end: HTML, CSS, JavaScript
+Back-end: Node.js, Express.js
+Database: PouchDB
+Version Control: Git, GitHub
+
+# Contact Information
+Brian Cheung
+bricheung@umass.edu
+8573188924

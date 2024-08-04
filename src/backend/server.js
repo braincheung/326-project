@@ -3,9 +3,9 @@ import * as http from "http";
 import * as url from "url";
 import {
   saveUser,
-  //loadUser,
-  //updateUser as updateUserData,
-  //deleteUser,
+  loadUser,
+  updateUser as updateUserData,
+  deleteUser,
   findUserByEmail,
   generateQRCode
 } from "./db.js";
@@ -65,20 +65,36 @@ async function signup(response, firstname, lastname, email, password, phone, pro
 //it returns a success message with the user data if the signin is successful
 //if the credentials are invalid, it returns an error message
 //if an error occurs, it returns an error message
+//edited the function for the settings page so we can get the user data and edit it when needed
 async function signin(response, email, password){
   console.log('Signin request:', {email, password });
   try{
     const result = await findUserByEmail(email);
     console.log('Find user:', result);
     if(result.docs.length > 0 && result.docs[0].password === password){
+      const userData = result.docs[0];
+      delete userData.password; 
+      
+      //new addition to sign in so we can get the user data and edit it when needed
+      const userResponse = {
+        firstname: userData.firstname || userData.username?.split(' ')[0], //this is going to be using the username to get the first name
+        lastname: userData.lastname || userData.username?.split(' ')[1], //this is going to be using the username to get the last name
+        email: userData.email,
+        phone: userData.phone,
+        birthday: userData.birthday,
+        promo: userData.promo,
+        qrCode: userData.qrCode,
+        stamps: userData.stamps,
+        rewards: userData.rewards
+      };
       response.writeHead(200, headerFields);
-      response.write(JSON.stringify({ message: 'Sign-in successful', user: result.docs[0] }));
-    }else{
+      response.write(JSON.stringify({ message: 'Sign-in successful', user: userResponse }));
+    } else {
       response.writeHead(401, headerFields);
       response.write(JSON.stringify({ message: 'Invalid credentials' }));
     }
     response.end();
-  }catch (err){
+  } catch (err){
     console.error('Error during sign-in:', err);
     response.writeHead(500, headerFields);
     response.write(JSON.stringify({ message: 'Error during sign-in', error: err.message }));
@@ -94,6 +110,8 @@ async function signin(response, email, password){
 async function resetPassword(response, email) {
   try {
     const result = await findUserByEmail(email);
+    //if the email exists, send password reset instructions
+    //not completely implemented yet
     if (result.docs.length > 0) {
       response.writeHead(200, headerFields);
       response.write(JSON.stringify({ message: 'Password reset instructions sent' }));
@@ -115,38 +133,80 @@ async function resetPassword(response, email) {
 //it saves the updated user data to the database
 //it returns a success message if the user data is updated successfully
 //if an error occurs, it returns an error message
-async function updateUser(response, username, data) {
+async function updateUser(response, data) {
   try {
-    const user = await loadUser(username);
-    Object.assign(user, data);
-    await updateUserData(user);
-    response.writeHead(200, headerFields);
-    response.write(JSON.stringify({ message: 'User data updated successfully' }));
-    response.end();
+      const result = await findUserByEmail(data.email);
+      if (result.docs.length === 0) {
+          response.writeHead(404, { "Content-Type": "application/json" });
+          response.write(JSON.stringify({ message: 'User not found' }));
+          response.end();
+          return;
+      }
+      const user = result.docs[0];
+      Object.assign(user, data);
+      //this is added to update the password if the user wants to change it
+      if (data.password) {
+          user.password = data.password;
+      }
+      await updateUserData(user);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.write(JSON.stringify({ message: 'User updated successfully' }));
+      response.end();
   } catch (err) {
-    response.writeHead(500, headerFields);
-    response.write(JSON.stringify({ message: 'Error updating user data', error: err.message }));
-    response.end();
+      console.error('Error updating user:', err);
+      response.writeHead(500, { "Content-Type": "application/json" });
+      response.write(JSON.stringify({ message: 'Error updating user data', error: err.message }));
+      response.end();
   }
 }
-
 //async delete user function, it takes response, username as parameters
 //it deletes the user from the database
 //it returns a success message if the user is deleted successfully
 //if an error occurs, it returns an error message
-async function deleteUserAccount(response, username) {
+async function deleteUserAccount(response, email) {
   try {
-    await deleteUser(username);
-    response.writeHead(200, headerFields);
-    response.write(JSON.stringify({ message: `User ${username} deleted successfully` }));
-    response.end();
+      const result = await findUserByEmail(email);
+      if (result.docs.length === 0) {
+          response.writeHead(404, { "Content-Type": "application/json" });
+          response.write(JSON.stringify({ message: 'User not found' }));
+          response.end();
+          return;
+      }
+      await deleteUser(result.docs[0]._id);
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.write(JSON.stringify({ message: 'User deleted successfully' }));
+      response.end();
   } catch (err) {
-    response.writeHead(500, headerFields);
-    response.write(JSON.stringify({ message: 'Error deleting user', error: err.message }));
-    response.end();
+      console.error('Error deleting user:', err);
+      response.writeHead(500, { "Content-Type": "application/json" });
+      response.write(JSON.stringify({ message: 'Error deleting user', error: err.message }));
+      response.end();
   }
 }
-
+//new function
+//async get user data function, it takes response, email as parameters
+//it fetches the user data from the database
+//it sends the user data to the client
+//if the user is not found, it returns an error message
+//if an error occurs, it returns an error message
+async function getUserData(response, email) {
+  try {
+      const result = await findUserByEmail(email);
+      if (result.docs.length > 0) {
+          const userData = result.docs[0];
+          delete userData.password; // Don't send the password to the client
+          response.writeHead(200, headerFields);
+          response.end(JSON.stringify(userData));
+      } else {
+          response.writeHead(404, headerFields);
+          response.end(JSON.stringify({ message: 'User not found' }));
+      }
+  } catch (err) {
+      console.error('Error fetching user data:', err);
+      response.writeHead(500, headerFields);
+      response.end(JSON.stringify({ message: 'Error fetching user data', error: err.message }));
+  }
+}
 //still working on this function should create a qr code for the user and save it to the database
 async function getQRCode(response, username){
   try{
@@ -198,6 +258,9 @@ async function basicServer(request, response) {
   const pathname = parsedUrl.pathname;
   const options = parsedUrl.query;
 
+  console.log(`Received ${request.method} request for ${pathname}`);
+  console.log('Query parameters:', options);
+
   if (pathname === "/signup" && request.method === "POST") {
     const body = await getRequestBody(request);
     console.log('Request body:', body);
@@ -219,15 +282,15 @@ async function basicServer(request, response) {
 
   if (pathname === "/update-user" && request.method === "PUT") {
     const body = await getRequestBody(request);
-    await updateUser(response, body.username, body.data);
+    await updateUser(response, body);
     return;
-  }
+}
 
-  if (pathname === "/delete-user" && request.method === "DELETE") {
+if (pathname === "/delete-user" && request.method === "DELETE") {
     const body = await getRequestBody(request);
-    await deleteUserAccount(response, body.username);
+    await deleteUserAccount(response, body.email);
     return;
-  }
+}
 
   if (pathname === "/qr-code" && request.method === "GET") {
     const body = await getRequestBody(request);
@@ -244,6 +307,12 @@ async function basicServer(request, response) {
     sendStaticFile(response, pathname);
     return;
   }
+//added this so we can change the user data when needed
+if (pathname === "/get-user" && request.method === "GET") {
+  const email = parsedUrl.query.email;
+  await getUserData(response, email);
+  return;
+}
 
   response.writeHead(405, { "Content-Type": "text/plain" });
   response.write("Method Not Allowed");

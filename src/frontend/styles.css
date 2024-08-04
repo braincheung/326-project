@@ -301,3 +301,32 @@ nav a.active {
     margin-right: 10px;
 }
 /*end of rewards section page*/
+/*start of styles for the settings page*/
+#settings-view {
+    padding: 20px;
+}
+#settings-header {
+    margin-bottom: 20px;
+}
+#settings-form {
+    margin-bottom: 20px;
+}
+#delete-account-button {
+    background-color: var(--color1);
+    margin-top: 10px;
+}
+#settings-form input[type="password"] {
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid var(--color4);
+    background-color: transparent;
+    font-size: 16px;
+}
+
+#settings-form input[type="password"]:focus {
+    outline: none;
+    border-bottom-color: var(--color2);
+}
+/*end of styles for the settings page*/

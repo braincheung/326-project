@@ -52,8 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Home navigation
     document.getElementById('home').addEventListener('click', () => navigate('home-view'));
     document.getElementById('rewards').addEventListener('click', () => navigate('rewards-view'));
-    document.getElementById('settings').addEventListener('click', () => navigate('settings-view'));
-
+    document.getElementById('settings').addEventListener('click', () => {
+        updateActiveNavLink('settings-view');
+        navigate('settings-view');
+        populateSettingsForm();
+    });
     //initialize with the signin view
     navigate('signin-view');
 
@@ -66,10 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //if the server responds with a 200 status code, the user will be navigated to the home view
     //if the server responds with an error, the user will see an alert with the error message
     document.getElementById('signin-form').addEventListener('submit', async function(e) {
-        //prevent the default form submission
         e.preventDefault();
         const formData = new FormData(this);
-        const data ={
+        const data = {
             email: formData.get('email'),
             password: formData.get('password')
         };
@@ -81,8 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(data)
             });
             const result = await response.json();
-            console.log('Sign-in server response:', result); // Debugging
+            console.log('Sign-in server response:', result);
             if(response.ok){
+                localStorage.setItem('currentUserEmail', data.email);
+                localStorage.setItem('currentUserData', JSON.stringify(result.user)); //store the user data
                 navigate('home-view');
             }else{
                 alert(result.message);
@@ -165,33 +169,87 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(result.message);
         }
     });
-
-    // Add delete user functionality
-    const deleteUserForm = document.getElementById('delete-user-form');
-    if (deleteUserForm) {
-        deleteUserForm.addEventListener('submit', async function(e) {
+//revamped settings form 
+//the settings form will now send a PUT request to the server
+//it will send the user's first name, last name, email, phone number, birthday, promo, and password to the server
+//if the server responds with a 200 status code, the user will see an alert that says "Account updated successfully"
+//if the server responds with an error, the user will see an alert with the error message
+//if the server responds with a 409 status code, the user will see an alert that says "User already exists"
+    document.getElementById('settings-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const formData = new FormData(this);
-        const data = { username: formData.get('username') };
-        if (!data.username) {
-            alert("Username is required");
-            return;
+        const data = {
+            firstname: formData.get('firstname'),
+            lastname: formData.get('lastname'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            birthday: formData.get('birthday'),
+            promo: formData.get('promo') === 'yes'
+        };
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirmPassword');
+        //check if the password fields are filled out
+        if(password){
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return;
+            }
+            data.password = password;
         }
-        const response = await fetch(`${URL}/delete-user`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (response.ok) {
-            alert("User deleted successfully");
-            navigate('signin-view');
-        } else {
-            alert(result.message);
+    
+        try{
+            //this try catch block will send a PUT request to the server
+            const response = await fetch(`${URL}/update-user`,{
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            if(response.ok){
+                alert("Account updated successfully");
+                //this updates the user data in local storage
+                localStorage.setItem('currentUserData', JSON.stringify({...JSON.parse(localStorage.getItem('currentUserData')), ...data}));
+            }else{
+                alert(result.message || "An error occurred while updating the account");
+            }
+        }catch (error){
+            console.error('Error updating account:', error);
+            alert("An error occurred while updating the account. Please try again.");
         }
     });
-    }
+    
+    // Add event listener for delete account button
+    document.getElementById('delete-account-button').addEventListener('click', async function() {
+        // Add a confirmation dialog before deleting the account
+        if(confirm("Are you sure you want to delete your account? This action cannot be undone.")){
+            try{
+                const currentEmail = localStorage.getItem('currentUserEmail'); //this gets the current user email for querying purpose
+                if(!currentEmail){
+                    alert("No user is currently logged in.");
+                    return;
+                }
+                //this try catch block will send a request to the server
+                const response = await fetch(`${URL}/delete-user`, {
+                    method: 'DELETE',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ email: currentEmail })
+                });
+                const result = await response.json();
+                if(response.ok){
+                    alert("Account deleted successfully");
+                    localStorage.removeItem('currentUserEmail'); //clears the storage
+                    navigate('signin-view');
+                }else{
+                    alert(result.message || "An error occurred while deleting the account");
+                }
+            }catch (error){
+                console.error('Error deleting account:', error);
+                alert("An error occurred while deleting the account. Please try again.");
+            }
+        }
+    });
     //QR code button functionality this will show and remove the qr code
+    //not fully functioning. still in testing
     function displayQRCode() {
         const qrCodeData = localStorage.getItem('userQRCode');
         if (qrCodeData) {
@@ -289,4 +347,23 @@ function changeLogo(viewId) {
                 logoElement.src = 'logo.png';
         }
     }
+}
+//this function is a helper function which will populate the settings form with the user's data
+//the function first gets the user data from local storage
+//then it populates the form fields with the user's data
+function populateSettingsForm(){
+    const userData = JSON.parse(localStorage.getItem('currentUserData'));
+    if(!userData){
+        console.error('No user data found in localStorage');
+        return;
+    }
+    document.querySelector('#settings-form [name="firstname"]').value = userData.firstname || '';
+    document.querySelector('#settings-form [name="lastname"]').value = userData.lastname || '';
+    document.querySelector('#settings-form [name="email"]').value = userData.email || '';
+    document.querySelector('#settings-form [name="phone"]').value = userData.phone || '';
+    document.querySelector('#settings-form [name="birthday"]').value = userData.birthday || '';
+    document.querySelector(`#settings-form [name="promo"][value="${userData.promo ? 'yes' : 'no'}"]`).checked = true;
+    //this clears the password fields for security
+    document.querySelector('#settings-form [name="password"]').value = '';
+    document.querySelector('#settings-form [name="confirmPassword"]').value = '';
 }
