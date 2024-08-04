@@ -31,10 +31,10 @@
                 <h1 id="sign-in" class="header-font">SIGN IN</h1>
 
                 <form id="signin-form">
-                    <input type="text" class="app-input" placeholder="Username or Email" required>
+                    <input type="text" name="email" class="app-input" placeholder="Username or Email" required>
                     <div class="password-container">
-                        <input type="password" placeholder="Password" class="app-input" required>
-                        <!--Added an image for the password toggle and inline styling-->
+                        <input type="password" name="password" placeholder="Password" class="app-input" required>
+                        <!-- Added an image for the password toggle and inline styling -->
                         <span class="password-toggle"><img src="eye1.png" alt="Toggle Password Visibility" style="width: 30px; height: 25px;"></span>
                     </div>
                     <button type="submit" class="app-button">Sign In</button>
@@ -63,27 +63,31 @@
                 <h1 id="create-account" class="header-font">CREATE ACCOUNT</h1>
                 <p>Create an account so you can order your favorites even faster.</p>
                 <form id="signup-form">
-                    <input type="text" placeholder="First Name" class="app-input" required>
-                    <input type="text" placeholder="Last Name" class="app-input" required>
-                    <input type="email" placeholder="Email" class="app-input" required>
+                    <input type="text" id="signup-firstname" name="firstname" placeholder="First Name" class="app-input" required>
+                    <input type="text" id="signup-lastname" name="lastname" placeholder="Last Name" class="app-input" required>
+                    <input type="email" id="signup-email" name="email" placeholder="Email" class="app-input" required>
+                    <input type="tel" id="signup-phone" name="phone" placeholder="Phone Number" class="app-input" required>
 
+            
                     <div class="password-container">
-                        <input type="password" placeholder="Password" class="app-input" required>
+                        <input type="password" id="signup-password" name="password" placeholder="Password" class="app-input" required>
                         <!--Password visibility toggle-->
                         <span class="password-toggle"><img src="eye1.png" alt="Toggle Password Visibility" style="width: 30px; height: 25px;"></span>
                     </div>
 
-                    <input type="tel" placeholder="Mobile Number" class="app-input" required>
                     <p>Enter a valid mobile number that can accept SMS messages. This will be used to verify your identity, grant access to your account, and for order-related notifications.</p>
-                    
+
                     <div class="radio-container">
                         <p>Receive text offers and promotions?*</p>
-                        <label><input type="radio" name="promotions" value="yes"> Yes</label>
-                        <label><input type="radio" name="promotions" value="no" checked> No</label>
-                   </div>
+                        <input type="radio" id="promo-yes" name="promo" value="yes">
+                        <label for="promo-yes">Yes</label>
+                        <input type="radio" id="promo-no" name="promo" value="no">
+                        <label for="promo-no">No</label>
+                    </div>
                     <!--Added a date input for birthday-->
-                    <input type="date" placeholder="Birthday (optional)" class="app-input">
-                    <p>By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p> 
+                    <p>Birthday</p>
+                    <input type="date" id="signup-birthday" name="birthday" class="app-input" required>
+                    <p>By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
                     <button type="submit" class="app-button">Create Account</button>
                 </form>
                 <p>Already have an account? <a href="#" id="show-signin">Sign In</a></p>
@@ -162,7 +166,7 @@
 
         <div id="qr-code-popup" class="popup hidden">
             <div class="popup-content">
-                <img src="qr.PNG" alt="QR Code">
+                <img id="qr-code-image" alt="QR Code">
                 <button id="close-qr-popup">Close</button>
             </div>
         </div>
