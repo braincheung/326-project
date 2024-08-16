@@ -114,17 +114,18 @@ async function resetPassword(response, email) {
     //not completely implemented yet
     if (result.docs.length > 0) {
       response.writeHead(200, headerFields);
-      response.write(JSON.stringify({ message: 'Password reset instructions sent' }));
-    } else {
+      response.write(JSON.stringify({ message: 'Password reset instructions sent to your email' }));
+  } else {
       response.writeHead(404, headerFields);
       response.write(JSON.stringify({ message: 'Email not found' }));
-    }
-    response.end();
-  } catch (err) {
-    response.writeHead(500, headerFields);
-    response.write(JSON.stringify({ message: 'Error resetting password', error: err.message }));
-    response.end();
   }
+  response.end();
+} catch (err) {
+  console.error('Error resetting password:', err);
+  response.writeHead(500, headerFields);
+  response.write(JSON.stringify({ message: 'Error resetting password', error: err.message }));
+  response.end();
+}
 }
 
 //async update user function, it takes response, username, data as parameters

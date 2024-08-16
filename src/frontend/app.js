@@ -152,21 +152,28 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const formData = new FormData(this);
         const data = { email: formData.get('email') };
-        if (!data.email) {
+    
+        if(!data.email) {
             alert("Email is required");
             return;
         }
-        const response = await fetch(`${URL}/reset-password`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (response.ok) {
-            alert("Password reset instructions sent to your email");
-            navigate('signin-view');
-        } else {
-            alert(result.message);
+        try{
+            const response = await fetch(`${URL}/reset-password`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.message); // Successfully sent reset instructions
+                navigate('signin-view'); // Redirect user to sign-in view
+            } else {
+                alert(result.message); // Show error message (email not found, etc.)
+            }
+        } catch (err) {
+            console.error('Error during password reset:', err);
+            alert("An error occurred. Please try again.");
         }
     });
 //revamped settings form 
