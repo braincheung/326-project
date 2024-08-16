@@ -330,3 +330,37 @@ nav a.active {
     border-bottom-color: var(--color2);
 }
 /*end of styles for the settings page*/
+
+/*QR code popup styling */
+#qr-code-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--color7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#qr-code-popup .popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#qr-code-popup img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+#qr-code-popup button {
+    padding: 10px 20px;
+    background-color: var(--color1);
+    color: var(--color7);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
